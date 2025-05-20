@@ -645,9 +645,9 @@ const handleError = (error, message) => {
     <div
       class="flex flex-col flex-grow-0 h-1/2 p-2 border-b border-gray-700 overflow-hidden"
     >
-      <div class="flex items-center justify-between mb-2 px-2">
-        <div class="flex items-center flex-grow mr-2">
-          <label for="deckName" class="mr-2 text-sm">デッキ名:</label>
+      <div class="flex items-center justify-between mb-2 px-2 flex-wrap gap-2">
+        <div class="flex items-center flex-grow min-w-[200px]">
+          <label for="deckName" class="mr-2 text-sm whitespace-nowrap">デッキ名:</label>
           <input
             id="deckName"
             type="text"
@@ -657,17 +657,17 @@ const handleError = (error, message) => {
           />
         </div>
 
-        <div class="flex space-x-2">
+        <div class="flex flex-wrap gap-2">
           <button
             @click="generateAndShowDeckCode"
-            class="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition duration-200"
+            class="px-3 py-1.5 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition duration-200 whitespace-nowrap"
             title="デッキコードを生成"
           >
             コード生成
           </button>
           <button
             @click="saveDeckAsPng"
-            class="px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition duration-200"
+            class="px-3 py-1.5 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition duration-200 whitespace-nowrap"
             :disabled="deckCards.length === 0"
             title="デッキ画像を保存"
           >
@@ -675,7 +675,7 @@ const handleError = (error, message) => {
           </button>
           <button
             @click="resetDeck"
-            class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700 transition duration-200"
+            class="px-3 py-1.5 bg-red-600 text-white rounded text-sm hover:bg-red-700 transition duration-200 whitespace-nowrap"
             :disabled="deckCards.length === 0"
             title="デッキをリセット"
           >
@@ -690,7 +690,7 @@ const handleError = (error, message) => {
 
       <div
         id="chosen-deck-grid"
-        class="flex-grow overflow-y-auto grid grid-cols-3 gap-2 p-2 bg-gray-700 rounded"
+        class="flex-grow overflow-y-auto grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 p-2 bg-gray-700 rounded"
       >
         <div
           v-for="item in sortedDeckCards"
@@ -714,17 +714,17 @@ const handleError = (error, message) => {
           >
             <button
               @click="decrementCardCount(item.card.id)"
-              class="w-8 h-8 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center leading-none transition duration-200"
+              class="w-6 h-6 sm:w-8 sm:h-8 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center leading-none transition duration-200"
             >
               －
             </button>
             <span
-              class="w-8 h-8 font-bold text-center flex items-center justify-center"
+              class="w-6 h-6 sm:w-8 sm:h-8 font-bold text-center flex items-center justify-center"
               >{{ item.count }}</span
             >
             <button
               @click="incrementCardCount(item.card.id)"
-              class="w-8 h-8 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center leading-none transition duration-200"
+              class="w-6 h-6 sm:w-8 sm:h-8 bg-green-600 hover:bg-green-700 text-white rounded-full flex items-center justify-center leading-none transition duration-200"
               :disabled="item.count >= 4 || totalDeckCards >= 60"
             >
               ＋
@@ -746,7 +746,7 @@ const handleError = (error, message) => {
         <h2 class="text-lg font-semibold">カード一覧</h2>
         <button
           @click="openFilterModal"
-          class="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition duration-200"
+          class="px-3 py-1.5 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition duration-200"
           title="フィルター・検索"
         >
           検索/絞り込み
@@ -754,7 +754,7 @@ const handleError = (error, message) => {
       </div>
 
       <div
-        class="flex-grow overflow-y-auto grid grid-cols-3 gap-2 p-2 bg-gray-700 rounded"
+        class="flex-grow overflow-y-auto grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 p-2 bg-gray-700 rounded"
       >
         <div
           v-if="isLoading"
@@ -807,7 +807,7 @@ const handleError = (error, message) => {
           <h3 class="text-lg font-bold">検索・絞り込み</h3>
           <button
             @click="closeFilterModal"
-            class="text-gray-400 hover:text-white"
+            class="text-gray-400 hover:text-white text-2xl"
           >
             ×
           </button>
@@ -828,7 +828,7 @@ const handleError = (error, message) => {
 
         <div class="mb-4">
           <label class="block text-sm font-medium mb-2">種類で絞り込み</label>
-          <div class="grid grid-cols-2 gap-2 text-sm">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
             <label
               v-for="kind in allKinds"
               :key="kind"
@@ -847,7 +847,7 @@ const handleError = (error, message) => {
 
         <div class="mb-4">
           <label class="block text-sm font-medium mb-2">タイプで絞り込み</label>
-          <div class="grid grid-cols-3 gap-2 text-sm">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 text-sm">
             <label
               v-for="type in allTypes"
               :key="type"
@@ -867,7 +867,7 @@ const handleError = (error, message) => {
         <div class="mb-4">
           <label class="block text-sm font-medium mb-2">タグで絞り込み</label>
           <div
-            class="grid grid-cols-2 gap-2 text-sm max-h-[40vh] overflow-y-auto pr-2"
+            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 text-sm max-h-[40vh] overflow-y-auto pr-2"
           >
             <label v-for="tag in allTags" :key="tag" class="flex items-center">
               <input
@@ -886,22 +886,22 @@ const handleError = (error, message) => {
     <!-- デッキコードモーダル -->
     <div
       v-if="showDeckCodeModal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
       @click.self="showDeckCodeModal = false"
     >
-      <div class="bg-gray-800 rounded-lg p-6 w-full max-w-md">
+      <div class="bg-gray-800 rounded-lg p-4 sm:p-6 w-full max-w-md">
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-lg font-bold">デッキコード</h3>
           <button
             @click="showDeckCodeModal = false"
-            class="text-gray-400 hover:text-white"
+            class="text-gray-400 hover:text-white text-2xl"
           >
             ×
           </button>
         </div>
 
         <div class="mb-4">
-          <div class="flex items-center space-x-2">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
             <input
               type="text"
               v-model="deckCode"
@@ -910,7 +910,7 @@ const handleError = (error, message) => {
             />
             <button
               @click="copyDeckCode"
-              class="px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition duration-200"
+              class="px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 transition duration-200 whitespace-nowrap"
             >
               コピー
             </button>
@@ -919,7 +919,7 @@ const handleError = (error, message) => {
 
         <div class="mb-4">
           <h4 class="text-sm font-medium mb-2">デッキコードをインポート</h4>
-          <div class="flex items-center space-x-2">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
             <input
               type="text"
               v-model="importDeckCode"
@@ -928,7 +928,7 @@ const handleError = (error, message) => {
             />
             <button
               @click="importDeckFromCode"
-              class="px-3 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition duration-200"
+              class="px-3 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700 transition duration-200 whitespace-nowrap"
             >
               インポート
             </button>
@@ -969,6 +969,24 @@ const handleError = (error, message) => {
 
   button {
     padding: 0.5rem;
+  }
+
+  input[type="text"] {
+    font-size: 16px; /* iOSでズームを防ぐ */
+  }
+}
+
+/* タブレット向けの最適化 */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .grid {
+    gap: 0.75rem;
+  }
+}
+
+/* デスクトップ向けの最適化 */
+@media (min-width: 1025px) {
+  .grid {
+    gap: 1rem;
   }
 }
 </style>
